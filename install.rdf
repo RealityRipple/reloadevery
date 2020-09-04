@@ -4,26 +4,28 @@
      xmlns:em="http://www.mozilla.org/2004/em-rdf#">
 
   <Description about="urn:mozilla:install-manifest">
-    <em:id>{888d99e7-e8b5-46a3-851e-1ec45da1e644}</em:id>
-    <em:version>45.0.0</em:version>
+    <em:id>{240C6774-9B7F-5EF3-9F29-98CD4970FEBF}</em:id>
+    <em:version>28.1</em:version>
     <em:type>2</em:type>
     
     <!-- Target Application this extension can install into, 
         with minimum and maximum supported versions. --> 
     <em:targetApplication>
-     <!-- Firefox -->
+     <!-- Pale Moon -->
      <Description>
-       <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
-       <em:minVersion>23.*</em:minVersion>
-       <em:maxVersion>45.*</em:maxVersion>
+      <em:id>{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4}</em:id>
+      <em:minVersion>25.0a1pre</em:minVersion>
+      <em:maxVersion>28.*</em:maxVersion>
      </Description>
     </em:targetApplication>
     
     <!-- Front End MetaData -->
     <em:name>ReloadEvery</em:name>
     <em:description>Reloads webpages every so many seconds or minutes</em:description>
-    <em:creator>Jaap Haitsma</em:creator>
-    <em:homepageURL>http://reloadevery.mozdev.org/</em:homepageURL>
+    <em:creator>RealityRipple</em:creator>
+    <em:contributor>Jaap Haitsma</em:contributor>
+    <em:homepageURL>https://realityripple.com/Software/Mozilla-Extensions/ReloadEvery/</em:homepageURL>
+    <em:updateURL>https://realityripple.com/Software/Mozilla-Extensions/ReloadEvery/update.rdf</em:updateURL>
 
     <!-- Front End Integration Hooks (used by Extension Manager)-->  
 

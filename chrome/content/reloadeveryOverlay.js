@@ -41,7 +41,6 @@ org.mozdev.reloadevery = {
     DEBUG: false,
 
     APP_NAME: "ReloadEvery",
-    VERSION: "45.0.0",
 
     DEFAULT_RELOAD_TIME: 10,
     DEFAULT_RELOAD_NEW_TABS: false,
@@ -76,7 +75,7 @@ org.mozdev.reloadevery = {
 
     init: function (){
         this.prefs = Components.classes["@mozilla.org/preferences-service;1"].
-                        getService(Components.interfaces.nsIPrefService).getBranch("reloadevery.");
+                        getService(Components.interfaces.nsIPrefService).getBranch("extensions.reloadevery.");
 
         try {
             this.DEBUG = this.prefs.getBoolPref("debug");
@@ -116,17 +115,6 @@ org.mozdev.reloadevery = {
         } catch (e if e.name = "NS_ERROR_UNEXPECTED") {
             this.debug("init(): no preferences found in prefs.js taking default for reload time randomization");
             this.prefs.setBoolPref("randomize", this.DEFAULT_RANDOMIZE);
-        }
-    
-        if (!this.prefs.prefHasUserValue("version")) {
-            this.debug("init(): no version found");
-            setTimeout(function() { window.openUILinkIn("http://reloadevery.mozdev.org/thanks-install.html", "tab"); }, 500);
-            this.prefs.setCharPref("version", this.VERSION);
-        }
-        if (this.prefs.getCharPref("version") != this.VERSION) {
-            this.debug("init(): newer version");
-            setTimeout(function() { window.openUILinkIn("http://reloadevery.mozdev.org/thanks.html", "tab"); }, 500);
-            this.prefs.setCharPref("version", this.VERSION);
         }
 
         try{
@@ -353,7 +341,7 @@ org.mozdev.reloadevery = {
         this.debug("customDialogLoadSettings()");
         // Runs in other dialog so we need to load prefs again
         this.prefs = Components.classes["@mozilla.org/preferences-service;1"].
-                        getService(Components.interfaces.nsIPrefService).getBranch("reloadevery.");
+                        getService(Components.interfaces.nsIPrefService).getBranch("extensions.reloadevery.");
 
         var customReloadTime = this.prefs.getIntPref("custom_reload_time");
         document.getElementById("reload_every_minutes").value = Math.floor(customReloadTime / 60);
