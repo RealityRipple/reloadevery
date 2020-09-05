@@ -1,17 +1,17 @@
-content reloadevery       chrome/content/
-overlay	chrome://browser/content/browser.xul	chrome://reloadevery/content/reloadeveryOverlay.xul
-skin    reloadevery skin  chrome/skin/
-locale  reloadevery en-US chrome/locale/en-US/
-locale  reloadevery es-ES chrome/locale/es-ES/
-locale  reloadevery fr-FR chrome/locale/fr-FR/
-locale  reloadevery de-DE chrome/locale/de-DE/
-locale  reloadevery it-IT chrome/locale/it-IT/
-locale  reloadevery nl-NL chrome/locale/nl-NL/
-locale  reloadevery cs-CZ chrome/locale/cs-CZ/
-locale  reloadevery pt-BR chrome/locale/pt-BR/
-locale  reloadevery zh-CN chrome/locale/zh-CN/
-locale  reloadevery zh-TW chrome/locale/zh-TW/
-locale  reloadevery ja-JA chrome/locale/ja-JA/
-locale  reloadevery ru-RU chrome/locale/ru-RU/
-locale  reloadevery sk-SK chrome/locale/sk-SK/
-locale  reloadevery pl-PL chrome/locale/pl-PL/
+content reloadrepeat       chrome/content/
+overlay	chrome://browser/content/browser.xul	chrome://reloadrepeat/content/reloadrepeatOverlay.xul
+skin    reloadrepeat skin  chrome/skin/
+locale  reloadrepeat en-US chrome/locale/en-US/
+locale  reloadrepeat es-ES chrome/locale/es-ES/
+locale  reloadrepeat fr-FR chrome/locale/fr-FR/
+locale  reloadrepeat de-DE chrome/locale/de-DE/
+locale  reloadrepeat it-IT chrome/locale/it-IT/
+locale  reloadrepeat nl-NL chrome/locale/nl-NL/
+locale  reloadrepeat cs-CZ chrome/locale/cs-CZ/
+locale  reloadrepeat pt-BR chrome/locale/pt-BR/
+locale  reloadrepeat zh-CN chrome/locale/zh-CN/
+locale  reloadrepeat zh-TW chrome/locale/zh-TW/
+locale  reloadrepeat ja-JA chrome/locale/ja-JA/
+locale  reloadrepeat ru-RU chrome/locale/ru-RU/
+locale  reloadrepeat sk-SK chrome/locale/sk-SK/
+locale  reloadrepeat pl-PL chrome/locale/pl-PL/

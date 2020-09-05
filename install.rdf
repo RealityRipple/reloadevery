@@ -4,8 +4,8 @@
      xmlns:em="http://www.mozilla.org/2004/em-rdf#">
 
   <Description about="urn:mozilla:install-manifest">
-    <em:id>{240C6774-9B7F-5EF3-9F29-98CD4970FEBF}</em:id>
-    <em:version>28.1</em:version>
+    <em:id>{60D4414D-327B-53E2-A6EC-97500D0E1F3B}</em:id>
+    <em:version>28.2</em:version>
     <em:type>2</em:type>
     
     <!-- Target Application this extension can install into, 
@@ -20,16 +20,17 @@
     </em:targetApplication>
     
     <!-- Front End MetaData -->
-    <em:name>ReloadEvery</em:name>
-    <em:description>Reloads webpages every so many seconds or minutes</em:description>
+    <em:name>ReloadRepeat</em:name>
+    <em:description>Reloads webpages every so many seconds or minutes.</em:description>
     <em:creator>RealityRipple</em:creator>
     <em:contributor>Jaap Haitsma</em:contributor>
-    <em:homepageURL>https://realityripple.com/Software/Mozilla-Extensions/ReloadEvery/</em:homepageURL>
-    <em:updateURL>https://realityripple.com/Software/Mozilla-Extensions/ReloadEvery/update.rdf</em:updateURL>
+    <em:homepageURL>https://realityripple.com/Software/Mozilla-Extensions/ReloadRepeat/</em:homepageURL>
+    <em:updateURL>https://realityripple.com/Software/Mozilla-Extensions/ReloadRepeat/update.rdf</em:updateURL>
 
     <!-- Front End Integration Hooks (used by Extension Manager)-->  
 
-    <em:iconURL>chrome://reloadevery/skin/reloadevery.png</em:iconURL>
+    <em:iconURL>chrome://reloadrepeat/skin/logo.png</em:iconURL>
+    <em:iconURL64>chrome://reloadrepeat/skin/logo64.png</em:iconURL64>
 
   </Description>      
 </RDF>

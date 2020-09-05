@@ -1,0 +1,32 @@
+<!ENTITY reloadrepeat_menu.label             "Aggiorna ogni">
+<!ENTITY reloadrepeat_menu.accesskey         "o">
+
+<!ENTITY reloadrepeat_enable.label           "Attiva">
+<!ENTITY reloadrepeat_enable_all_tabs.label  "Attiva su tutte le schede">
+<!ENTITY reloadrepeat_disable_all_tabs.label "Disattiva su tutte le schede">
+<!ENTITY reloadrepeat_randomize.label        "Random">
+<!ENTITY reloadrepeat_auto_new_tabs.label    "Auto attiva schede nuovo">
+
+<!ENTITY reloadrepeat_5s.label               "Aggiorna ogni  5 sec.">
+<!ENTITY reloadrepeat_10s.label              "Aggiorna ogni 10 sec.">
+<!ENTITY reloadrepeat_30s.label              "Aggiorna ogni 30 sec.">
+<!ENTITY reloadrepeat_1m.label               "Aggiorna ogni  1 min.">
+<!ENTITY reloadrepeat_5m.label               "Aggiorna ogni  5 min.">
+<!ENTITY reloadrepeat_15m.label              "Aggiorna ogni 15 min.">
+<!ENTITY reloadrepeat_custom.label           "Personalizzato...">
+
+<!ENTITY warn_postdata.title                 "Attenzione!">
+<!ENTITY warn_postdata.line1                 "La pagina su cui si sta tentando di attivare ReloadRepeat contiene campi di tipo POSTDATA.">
+<!ENTITY warn_postdata.line2                 "Se si attiva ReloadRepeat, ogni azione eseguita all'interno di un campo di testo">
+<!ENTITY warn_postdata.line3                 "(come un acquisto online) sarà ripetuta">
+<!ENTITY warn_postdata.line4                 "">
+<!ENTITY warn_postdata.line5                 "Attivare ReloadRepeat?">
+
+<!ENTITY reloadrepeat.yes                    "Sì">
+<!ENTITY reloadrepeat.no                     "No">
+
+<!ENTITY custom_dialog.title                 "Opzioni di aggiornamento">
+<!ENTITY custom_dialog.groupbox.label        "Intervallo di aggiornamento">
+
+<!ENTITY custom_dialog.minutes.label         "Minuti">
+<!ENTITY custom_dialog.seconds.label         "Secondi">

@@ -33,14 +33,12 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-if(!org) var org={};
-if(!org.mozdev) org.mozdev={};
-if(!org.mozdev.reloadevery) org.mozdev.reloadevery={};
+if(!reloadrepeat) var reloadrepeat={};
 
-org.mozdev.reloadevery = {
+reloadrepeat = {
     DEBUG: false,
 
-    APP_NAME: "ReloadEvery",
+    APP_NAME: "ReloadRepeat",
 
     DEFAULT_RELOAD_TIME: 10,
     DEFAULT_RELOAD_NEW_TABS: false,
@@ -67,7 +65,7 @@ org.mozdev.reloadevery = {
 
     tabAdded: function(event) {
         var newTab = gBrowser.getBrowserForTab(event.target);
-        if (newTab.reloadEveryEnabled == null) {
+        if (newTab.reloadRepeatEnabled == null) {
             this.debug("tabAdded() new tab"); 
             this.setupTab(newTab); 
         }
@@ -75,7 +73,7 @@ org.mozdev.reloadevery = {
 
     init: function (){
         this.prefs = Components.classes["@mozilla.org/preferences-service;1"].
-                        getService(Components.interfaces.nsIPrefService).getBranch("extensions.reloadevery.");
+                        getService(Components.interfaces.nsIPrefService).getBranch("extensions.reloadrepeat.");
 
         try {
             this.DEBUG = this.prefs.getBoolPref("debug");
@@ -118,15 +116,15 @@ org.mozdev.reloadevery = {
         }
 
         try{
-            document.getElementById("contentAreaContextMenu").addEventListener("popupshowing", function () {org.mozdev.reloadevery.contextPopup()}, false);
-            document.getElementById("tabContextMenu").addEventListener("popupshowing", function () {org.mozdev.reloadevery.tabPopup()}, false);
-            gURLBar.addEventListener("keypress", function () {org.mozdev.reloadevery.onKeyPressInURLBar()}, false);
-            gBrowser.tabContainer.addEventListener("TabOpen", function (event) {org.mozdev.reloadevery.tabAdded(event)}, false);
+            document.getElementById("contentAreaContextMenu").addEventListener("popupshowing", function () {reloadrepeat.contextPopup()}, false);
+            document.getElementById("tabContextMenu").addEventListener("popupshowing", function () {reloadrepeat.tabPopup()}, false);
+            gURLBar.addEventListener("keypress", function () {reloadrepeat.onKeyPressInURLBar()}, false);
+            gBrowser.tabContainer.addEventListener("TabOpen", function (event) {reloadrepeat.tabAdded(event)}, false);
         }
         catch(e){
             this.debug("gURLBar.addEventListener failed");
-            // Do nothing. reloadEveryInit() is also called when the preferences dialog is called and there 
-            // gURLBar.addEventListener("keypress", function () {org.mozdev.reloadevery.onKeyPressInURLBar()}, false);  
+            // Do nothing. reloadRepeatInit() is also called when the preferences dialog is called and there 
+            // gURLBar.addEventListener("keypress", function () {reloadrepeat.onKeyPressInURLBar()}, false);  
             // fails
         }
     },
@@ -139,10 +137,10 @@ org.mozdev.reloadevery = {
     setupTab: function(tab){
         this.debug("setupTab(tab)");
         // Add member attributes
-        tab.reloadEveryEnabled = false;
-        tab.reloadEveryReloadTime = this.prefs.getIntPref("reload_time");
-        this.debug("reload time: " + tab.reloadEveryReloadTime);
-        tab.reloadEveryTimerID = null;
+        tab.reloadRepeatEnabled = false;
+        tab.reloadRepeatReloadTime = this.prefs.getIntPref("reload_time");
+        this.debug("reload time: " + tab.reloadRepeatReloadTime);
+        tab.reloadRepeatTimerID = null;
         tab.postDataAcceptedByUser = false;
         tab.randomize = this.prefs.getBoolPref("randomize");
         tab.id = "ActiveReloadTab" + this.tabID;     
@@ -153,20 +151,20 @@ org.mozdev.reloadevery = {
             this.enable(tab);
         }
 
-        tab.reloadEveryProgressListener = this.progressListener(tab);
+        tab.reloadRepeatProgressListener = this.progressListener(tab);
 
     },
 
-    // hide the Reload Every item when apropriate (use same logic as for Back, Stop etc.)
+    // hide the Reload Repeat item when apropriate (use same logic as for Back, Stop etc.)
     showPopupMenu: function(prefix) {
 
         // Check if this a new window/tab   
-        if (this.getCurTab().reloadEveryEnabled == null) {
+        if (this.getCurTab().reloadRepeatEnabled == null) {
             this.debug("popup() new window"); 
             this.setupTab(this.getCurTab());    
         }
 
-        document.getElementById(prefix + "_enable").setAttribute("checked", this.getCurTab().reloadEveryEnabled ? "true" : "false");
+        document.getElementById(prefix + "_enable").setAttribute("checked", this.getCurTab().reloadRepeatEnabled ? "true" : "false");
         document.getElementById(prefix + "_randomize").setAttribute("checked", this.getCurTab().randomize ? "true" : "false");
         document.getElementById(prefix + "_auto_new_tabs").setAttribute("checked", this.prefs.getBoolPref("reload_new_tabs") ? "true" : "false");
 
@@ -179,66 +177,66 @@ org.mozdev.reloadevery = {
         document.getElementById(prefix + "_15m").setAttribute("checked", "false");
         document.getElementById(prefix + "_custom").setAttribute("checked", "false");
         // Now select the appropriate one 
-        if (this.getCurTab().reloadEveryReloadTime == 5) {
+        if (this.getCurTab().reloadRepeatReloadTime == 5) {
             document.getElementById(prefix + "_5s").setAttribute("checked", "true");
         }
-        else if (this.getCurTab().reloadEveryReloadTime == 10) {
+        else if (this.getCurTab().reloadRepeatReloadTime == 10) {
             document.getElementById(prefix + "_10s").setAttribute("checked", "true");
         }
-        else if (this.getCurTab().reloadEveryReloadTime == 30) {
+        else if (this.getCurTab().reloadRepeatReloadTime == 30) {
             document.getElementById(prefix + "_30s").setAttribute("checked", "true");
         }
-        else if (this.getCurTab().reloadEveryReloadTime == 60) {
+        else if (this.getCurTab().reloadRepeatReloadTime == 60) {
             document.getElementById(prefix + "_1m").setAttribute("checked", "true");  
         }
-        else if (this.getCurTab().reloadEveryReloadTime == 5*60) {
+        else if (this.getCurTab().reloadRepeatReloadTime == 5*60) {
             document.getElementById(prefix + "_5m").setAttribute("checked", "true");
         }
-        else if (this.getCurTab().reloadEveryReloadTime == 15*60) {
+        else if (this.getCurTab().reloadRepeatReloadTime == 15*60) {
             document.getElementById(prefix + "_15m").setAttribute("checked", "true");
         }
-        else if (this.getCurTab().reloadEveryReloadTime >= 0) {
+        else if (this.getCurTab().reloadRepeatReloadTime >= 0) {
             document.getElementById(prefix + "_custom").setAttribute("checked", "true"); 
         }
         else {
-            alert ("Invalid reload time:" + this.getCurTab().reloadEveryReloadTime + "s");
+            alert ("Invalid reload time:" + this.getCurTab().reloadRepeatReloadTime + "s");
         }
     },
     
     contextPopup: function() {
         this.debug("popup()");
         var cm = gContextMenu;
-        // hide the Reload Every item when apropriate (use same logic as for Back, Stop etc.)
+        // hide the Reload Repeat item when apropriate (use same logic as for Back, Stop etc.)
         var hidden = cm.isTextSelected || cm.onLink || cm.onImage || cm.onTextInput;
-        document.getElementById("reloadevery_menu").hidden = hidden;
+        document.getElementById("reloadrepeat_menu").hidden = hidden;
         if (!hidden) {
-            this.showPopupMenu("reloadevery");
+            this.showPopupMenu("reloadrepeat");
         }
     },
 
     tabPopup: function() {
         this.debug("tabPopup()");
-        this.showPopupMenu("tab_reloadevery");
+        this.showPopupMenu("tab_reloadrepeat");
     },
 
-    // Reloads the page of the tab with the specified reloadEveryTabID 
-    reloadPage: function (reloadEveryTabID){
-        this.debug("reloadPage(...) : " + reloadEveryTabID);
-        var tab = document.getElementById(reloadEveryTabID); 
+    // Reloads the page of the tab with the specified reloadRepeatTabID 
+    reloadPage: function (reloadRepeatTabID){
+        this.debug("reloadPage(...) : " + reloadRepeatTabID);
+        var tab = document.getElementById(reloadRepeatTabID); 
 
         if (tab == null){
-            this.debug("reloadPage(...) : ReloadEvery disabled");
+            this.debug("reloadPage(...) : ReloadRepeat disabled");
             return;
         }
 
-        if (tab.reloadEveryEnabled == false){
+        if (tab.reloadRepeatEnabled == false){
             tab.postDataAcceptedByUser = false;
-            this.debug("reloadPage(...) : ReloadEvery disabled");
+            this.debug("reloadPage(...) : ReloadRepeat disabled");
             return;
         }
 
         var loadFlags = tab.webNavigation.LOAD_FLAGS_BYPASS_HISTORY | tab.webNavigation.LOAD_FLAGS_BYPASS_PROXY | tab.webNavigation.LOAD_FLAGS_BYPASS_CACHE;
-        this.debug("reloadPage(...) : " + reloadEveryTabID + "reloading url :" + tab.webNavigation.currentURI.spec + " loadFlags: " + loadFlags);
+        this.debug("reloadPage(...) : " + reloadRepeatTabID + "reloading url :" + tab.webNavigation.currentURI.spec + " loadFlags: " + loadFlags);
 
         var entry=tab.webNavigation.sessionHistory.getEntryAtIndex(tab.webNavigation.sessionHistory.index, false);
         var postData = entry.QueryInterface(Components.interfaces.nsISHEntry).postData;
@@ -246,7 +244,7 @@ org.mozdev.reloadevery = {
     
         if ((postData != null) && (tab.postDataAcceptedByUser == false)) {
             var params = {result: null}; ;
-            window.openDialog("chrome://reloadevery/content/warnPostData.xul", "",
+            window.openDialog("chrome://reloadrepeat/content/warnPostData.xul", "",
                               "chrome,centerscreen,modal", params);
             if (params.result) {
                 this.debug("reloadPage(...) : POSTDATA accepted");
@@ -254,7 +252,7 @@ org.mozdev.reloadevery = {
             }
             else {
                 this.debug("reloadPage(...) : POSTDATA not accepted");
-                tab.reloadEveryEnabled=false;
+                tab.reloadRepeatEnabled=false;
                 return;           
             }        
         }                      
@@ -263,40 +261,40 @@ org.mozdev.reloadevery = {
         this.debug("Current scroll position " + tab.curScrollX + ", "+ tab.curScrollY);
 
         var notifyFlags = Components.interfaces.nsIWebProgress.NOTIFY_ALL;
-        tab.webProgress.addProgressListener(tab.reloadEveryProgressListener, notifyFlags);         
+        tab.webProgress.addProgressListener(tab.reloadRepeatProgressListener, notifyFlags);         
         tab.webNavigation.loadURI(tab.webNavigation.currentURI.spec, loadFlags, referrer, entry.postData, null);                                              
     },
 
-    reloadEvery: function(tab) {
-        this.debug("reloadEvery");
+    reloadRepeat: function(tab) {
+        this.debug("reloadRepeat");
 
-        var milliSeconds = tab.reloadEveryReloadTime*1000;
+        var milliSeconds = tab.reloadRepeatReloadTime*1000;
         if (tab.randomize) {
             milliSeconds = (Math.random() + 0.5) * milliSeconds;
         }
-        this.debug("reloadEvery(" + milliSeconds + ")");
+        this.debug("reloadRepeat(" + milliSeconds + ")");
 
-        return tab.reloadEveryTimerID=setTimeout("org.mozdev.reloadevery.reloadPage(\"" + tab.id + "\");", milliSeconds);  
+        return tab.reloadRepeatTimerID=setTimeout("reloadrepeat.reloadPage(\"" + tab.id + "\");", milliSeconds);  
     },
 
     enable: function(tab){
         this.debug("enable(tab)");
-        tab.reloadEveryEnabled = true;
-        clearInterval(tab.reloadEveryTimerID);
-        tab.reloadEveryTimerID=this.reloadEvery(tab);  
+        tab.reloadRepeatEnabled = true;
+        clearInterval(tab.reloadRepeatTimerID);
+        tab.reloadRepeatTimerID=this.reloadRepeat(tab);  
     },
 
     disable: function(tab) {
         this.debug("disable(tab)");
-        clearInterval(tab.reloadEveryTimerID);
-        tab.reloadEveryEnabled = false;
+        clearInterval(tab.reloadRepeatTimerID);
+        tab.reloadRepeatEnabled = false;
         tab.postDataAcceptedByUser = false;
     },
 
     toggle: function() { 
         this.debug("toggle()");
         var tab = this.getCurTab();
-        if (tab.reloadEveryEnabled) {
+        if (tab.reloadRepeatEnabled) {
             this.disable(tab);
         }
         else {
@@ -319,20 +317,20 @@ org.mozdev.reloadevery = {
     setReloadTime: function(reloadTime) {
         this.debug ("setReloadTime(" + reloadTime + ")");
 
-        this.getCurTab().reloadEveryReloadTime=reloadTime;
-        this.prefs.setIntPref("reload_time", this.getCurTab().reloadEveryReloadTime);    
+        this.getCurTab().reloadRepeatReloadTime=reloadTime;
+        this.prefs.setIntPref("reload_time", this.getCurTab().reloadRepeatReloadTime);    
         this.enable(this.getCurTab());
     },
 
     setReloadTimeCustom: function() {
         this.debug("setReloadTimeCustom()");
         var params = {result: null}; ;
-        window.openDialog("chrome://reloadevery/content/reloadeveryCustomDialog.xul", "",
+        window.openDialog("chrome://reloadrepeat/content/reloadrepeatCustomDialog.xul", "",
                           "chrome,centerscreen,modal", params);
 
         if (params.result) {
-            this.debug("onReloadEveryCustom() accepted");
-            this.getCurTab().reloadEveryReloadTime=this.prefs.getIntPref("custom_reload_time");         
+            this.debug("onReloadRepeatCustom() accepted");
+            this.getCurTab().reloadRepeatReloadTime=this.prefs.getIntPref("custom_reload_time");         
             this.enable(this.getCurTab());
         }
     },
@@ -341,27 +339,27 @@ org.mozdev.reloadevery = {
         this.debug("customDialogLoadSettings()");
         // Runs in other dialog so we need to load prefs again
         this.prefs = Components.classes["@mozilla.org/preferences-service;1"].
-                        getService(Components.interfaces.nsIPrefService).getBranch("extensions.reloadevery.");
+                        getService(Components.interfaces.nsIPrefService).getBranch("extensions.reloadrepeat.");
 
         var customReloadTime = this.prefs.getIntPref("custom_reload_time");
-        document.getElementById("reload_every_minutes").value = Math.floor(customReloadTime / 60);
-        document.getElementById("reload_every_seconds").value = customReloadTime % 60;
+        document.getElementById("reload_repeat_minutes").value = Math.floor(customReloadTime / 60);
+        document.getElementById("reload_repeat_seconds").value = customReloadTime % 60;
     },
 
     customDialogSaveSettings: function() {
-        this.debug("reloadeveryCustomDialogSaveSettings()");
+        this.debug("reloadrepeatCustomDialogSaveSettings()");
  
         var minutes;
 
-        if (document.getElementById("reload_every_minutes").value != '') {
-            minutes = parseInt(document.getElementById("reload_every_minutes").value);
+        if (document.getElementById("reload_repeat_minutes").value != '') {
+            minutes = parseInt(document.getElementById("reload_repeat_minutes").value);
         }
         else {
             minutes = 0;
         }
         var seconds;
-        if (document.getElementById("reload_every_seconds").value != '') {
-            seconds = parseInt(document.getElementById("reload_every_seconds").value);
+        if (document.getElementById("reload_repeat_seconds").value != '') {
+            seconds = parseInt(document.getElementById("reload_repeat_seconds").value);
         }
         else {
           seconds = 0;
@@ -375,16 +373,16 @@ org.mozdev.reloadevery = {
     },
 
     enableAllTabs: function() { 
-        this.debug("onReloadEveryEnableAllTabs() Number of tabs :" + getBrowser().browsers.length);
+        this.debug("onReloadRepeatEnableAllTabs() Number of tabs :" + getBrowser().browsers.length);
 
         for (i = 0; i < getBrowser().browsers.length; i++) {
            var tab = getBrowser().browsers[i];
             
-           if (tab.reloadEveryEnabled == null){
+           if (tab.reloadRepeatEnabled == null){
                 this.setupTab(tab);
            }
        
-           if (tab.reloadEveryEnabled != true){
+           if (tab.reloadRepeatEnabled != true){
                 this.enable(tab);
            }       
         }
@@ -397,7 +395,7 @@ org.mozdev.reloadevery = {
         for (i = 0; i < getBrowser().browsers.length; i++) {
             var tab = getBrowser().browsers[i];
        
-            if (tab.reloadEveryEnabled == true) {
+            if (tab.reloadRepeatEnabled == true) {
                 this.disable(tab);
            }       
         }
@@ -413,11 +411,11 @@ org.mozdev.reloadevery = {
     },
 
     onKeyPressInURLBar: function () {
-        if (this.getCurTab().reloadEveryEnabled){
-            this.debug("onKeyPressInURLBar(): disabling reload every");
-            this.getCurTab().reloadEveryEnabled = false;
+        if (this.getCurTab().reloadRepeatEnabled){
+            this.debug("onKeyPressInURLBar(): disabling reload repeat");
+            this.getCurTab().reloadRepeatEnabled = false;
             this.getCurTab().postDataAcceptedByUser = false;
-            clearInterval(this.getCurTab().reloadEveryTimerID);
+            clearInterval(this.getCurTab().reloadRepeatTimerID);
         }
     },
 
@@ -440,35 +438,35 @@ org.mozdev.reloadevery = {
 
                 if ((aStateFlags & Components.interfaces.nsIWebProgressListener.STATE_IS_WINDOW) && 
                     (aStateFlags & Components.interfaces.nsIWebProgressListener.STATE_STOP)) {        
-                    org.mozdev.reloadevery.debug("reloadEveryProgressListener(): page loaded " + tab.id);
-                    tab.webProgress.removeProgressListener(tab.reloadEveryProgressListener);
-                    org.mozdev.reloadevery.debug("scroll to " + tab.curScrollX + "," + tab.curScrollY);
+                    reloadrepeat.debug("reloadRepeatProgressListener(): page loaded " + tab.id);
+                    tab.webProgress.removeProgressListener(tab.reloadRepeatProgressListener);
+                    reloadrepeat.debug("scroll to " + tab.curScrollX + "," + tab.curScrollY);
                     tab.contentWindow.scrollTo(tab.curScrollX, tab.curScrollY); 
-                    if (tab.reloadEveryEnabled) {
-                        org.mozdev.reloadevery.debug("onStateChange: reloading again");
+                    if (tab.reloadRepeatEnabled) {
+                        reloadrepeat.debug("onStateChange: reloading again");
 
-                        tab.reloadEveryTimerID=org.mozdev.reloadevery.reloadEvery(tab);
+                        tab.reloadRepeatTimerID=reloadrepeat.reloadRepeat(tab);
                     }
                 }
             },
 
             onLocationChange : function(aWebProgress, aRequest, aLocation){
-                org.mozdev.reloadevery.debug("onLocationChange");
+                reloadrepeat.debug("onLocationChange");
             },
 
             onStatusChange : function(aWebProgress, aRequest, aStatus, aMessage){
-                org.mozdev.reloadevery.debug("onStatusChange");
+                reloadrepeat.debug("onStatusChange");
             },
 
             onSecurityChange : function(aWebProgress, aRequest, aState){
-                org.mozdev.reloadevery.debug("onSecurityChange");
+                reloadrepeat.debug("onSecurityChange");
             }
         });     
     }
-} // end org.mozdev.reloadevery
+} // end reloadrepeat
 
 
 
 // Every time a new browser window is made init will be called
-window.addEventListener("load",function() {org.mozdev.reloadevery.init()}, false);
+window.addEventListener("load",function() {reloadrepeat.init()}, false);
 

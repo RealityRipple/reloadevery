@@ -34,38 +34,38 @@
    -
    - ***** END LICENSE BLOCK ***** -->
 
-<!DOCTYPE window SYSTEM "chrome://reloadevery/locale/reloadevery.dtd" >
+<!DOCTYPE window SYSTEM "chrome://reloadrepeat/locale/reloadrepeat.dtd" >
 
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
 
-<dialog id="reloadevery_custom_dialog"
+<dialog id="reloadrepeat_custom_dialog"
         title="&custom_dialog.title;"
         buttons="accept,cancel"
-        ondialogaccept="window.arguments[0].result = true; org.mozdev.reloadevery.customDialogSaveSettings(); return true;"
+        ondialogaccept="window.arguments[0].result = true; reloadrepeat.customDialogSaveSettings(); return true;"
         ondialogcancel="window.arguments[0].result = false; return true;"
-        onload="org.mozdev.reloadevery.customDialogLoadSettings();"
+        onload="reloadrepeat.customDialogLoadSettings();"
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-<script src="reloadeveryOverlay.js"/>
+<script src="reloadrepeatOverlay.js"/>
 
 
 <groupbox orient="Vertical" width="100%">
  <caption label="&custom_dialog.groupbox.label;" />
   <hbox align="center">
-    <textbox id="reload_every_minutes" size="3" maxlength="3" tabindex="1"
+    <textbox id="reload_repeat_minutes" size="3" maxlength="3" tabindex="1"
              oninput="this.value=parseInt(this.value); 
                       if (this.value=='NaN') this.value='';
                       if (Number(this.value) &lt; 0) this.value = -this.value;" />
-    <label control="reload_every_minutes" value="&custom_dialog.minutes.label;"/>
+    <label control="reload_repeat_minutes" value="&custom_dialog.minutes.label;"/>
 
-    <textbox id="reload_every_seconds" size="2" maxlength="2" tabindex="1"
+    <textbox id="reload_repeat_seconds" size="2" maxlength="2" tabindex="1"
              oninput="this.value=parseInt(this.value); 
                       if (this.value=='NaN') this.value='';
                       if (Number(this.value) &lt; 0) this.value = -this.value;
                       if (Number(this.value) &gt; 59) this.value = 59;                    
                       " />
 
-    <label control="reload_every_minutes" value="&custom_dialog.seconds.label;"/>
+    <label control="reload_repeat_minutes" value="&custom_dialog.seconds.label;"/>
   </hbox>
 </groupbox>
 
