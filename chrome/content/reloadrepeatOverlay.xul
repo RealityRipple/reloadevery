@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-
 <!-- ***** BEGIN LICENSE BLOCK *****
    - Version: MPL 1.1/GPL 2.0/LGPL 2.1
    -
@@ -33,58 +32,49 @@
    - the terms of any one of the MPL, the GPL or the LGPL.
    -
    - ***** END LICENSE BLOCK ***** -->
-
 <!DOCTYPE window SYSTEM "chrome://reloadrepeat/locale/reloadrepeat.dtd" >
-
-<overlay id="ReloadRepeatOverlay"
-         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-
-<script src="reloadrepeatOverlay.js"/>
-
-<popup id="contentAreaContextMenu">
+<overlay id="ReloadRepeatOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+ <script src="chrome://reloadrepeat/content/reloadrepeatOverlay.js"/>
+ <popup id="contentAreaContextMenu">
   <menu id="reloadrepeat_menu" label="&reloadrepeat_menu.label;" accesskey="&reloadrepeat_menu.accesskey;" insertafter="context-reload">
-    <menupopup id="reloadrepeat_popup">
-      <menuitem id="reloadrepeat_enable" label="&reloadrepeat_enable.label;" type="checkbox" oncommand="reloadrepeat.toggle()"/>
-      <menuseparator /> 
-      <menuitem id="reloadrepeat_5s"  label="&reloadrepeat_5s.label;"  type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTime(5)"/>
-      <menuitem id="reloadrepeat_10s" label="&reloadrepeat_10s.label;" type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTime(10)"/>
-      <menuitem id="reloadrepeat_30s" label="&reloadrepeat_30s.label;" type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTime(30)"/>
-      <menuitem id="reloadrepeat_1m"  label="&reloadrepeat_1m.label;"  type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTime(60)"/>
-      <menuitem id="reloadrepeat_5m"  label="&reloadrepeat_5m.label;"  type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTime(5*60)"/>
-      <menuitem id="reloadrepeat_15m" label="&reloadrepeat_15m.label;" type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTime(15*60)"/> 
-      <menuitem id="reloadrepeat_custom"  label="&reloadrepeat_custom.label;"  type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTimeCustom()"/>
-      <menuseparator /> 
-      <menuitem id="reloadrepeat_randomize" label="&reloadrepeat_randomize.label;" type="checkbox" oncommand="reloadrepeat.randomize()"/>
-      <menuseparator /> 
-      <menuitem id="reloadrepeat_enable_all_tabs" label="&reloadrepeat_enable_all_tabs.label;" oncommand="reloadrepeat.enableAllTabs()"/>
-      <menuitem id="reloadrepeat_disable_all_tabs" label="&reloadrepeat_disable_all_tabs.label;" oncommand="reloadrepeat.disableAllTabs()"/>
-      <menuitem id="reloadrepeat_auto_new_tabs" label="&reloadrepeat_auto_new_tabs.label;" type="checkbox" oncommand="reloadrepeat.autoNewTabsToggle()"/>
-    </menupopup>
+   <menupopup id="reloadrepeat_popup">
+    <menuitem id="reloadrepeat_enable" label="&reloadrepeat_enable.label;" type="checkbox" oncommand="reloadrepeat.toggle()"/>
+    <menuseparator /> 
+    <menuitem id="reloadrepeat_5s"  label="&reloadrepeat_5s.label;"  type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTime(5)"/>
+    <menuitem id="reloadrepeat_10s" label="&reloadrepeat_10s.label;" type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTime(10)"/>
+    <menuitem id="reloadrepeat_30s" label="&reloadrepeat_30s.label;" type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTime(30)"/>
+    <menuitem id="reloadrepeat_1m"  label="&reloadrepeat_1m.label;"  type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTime(60)"/>
+    <menuitem id="reloadrepeat_5m"  label="&reloadrepeat_5m.label;"  type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTime(5*60)"/>
+    <menuitem id="reloadrepeat_15m" label="&reloadrepeat_15m.label;" type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTime(15*60)"/> 
+    <menuitem id="reloadrepeat_custom"  label="&reloadrepeat_custom.label;"  type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTimeCustom()"/>
+    <menuseparator /> 
+    <menuitem id="reloadrepeat_randomize" label="&reloadrepeat_randomize.label;" type="checkbox" oncommand="reloadrepeat.randomize()"/>
+    <menuseparator /> 
+    <menuitem id="reloadrepeat_enable_all_tabs" label="&reloadrepeat_enable_all_tabs.label;" oncommand="reloadrepeat.enableAllTabs()"/>
+    <menuitem id="reloadrepeat_disable_all_tabs" label="&reloadrepeat_disable_all_tabs.label;" oncommand="reloadrepeat.disableAllTabs()"/>
+    <menuitem id="reloadrepeat_auto_new_tabs" label="&reloadrepeat_auto_new_tabs.label;" type="checkbox" oncommand="reloadrepeat.autoNewTabsToggle()"/>
+   </menupopup>
   </menu>
-</popup>
-
-
-<popup id="tabContextMenu">
+ </popup>
+ <popup id="tabContextMenu">
   <menu id="tab_reloadrepeat_menu" label="&reloadrepeat_menu.label;" accesskey="&reloadrepeat_menu.accesskey;" insertafter="context_reloadTab">
-    <menupopup id="tab_reloadrepeat_popup">
-      <menuitem id="tab_reloadrepeat_enable" label="&reloadrepeat_enable.label;" type="checkbox" oncommand="reloadrepeat.toggle()"/>
-      <menuseparator /> 
-      <menuitem id="tab_reloadrepeat_5s"  label="&reloadrepeat_5s.label;"  type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTime(5)"/>
-      <menuitem id="tab_reloadrepeat_10s" label="&reloadrepeat_10s.label;" type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTime(10)"/>
-      <menuitem id="tab_reloadrepeat_30s" label="&reloadrepeat_30s.label;" type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTime(30)"/>
-      <menuitem id="tab_reloadrepeat_1m"  label="&reloadrepeat_1m.label;"  type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTime(60)"/>
-      <menuitem id="tab_reloadrepeat_5m"  label="&reloadrepeat_5m.label;"  type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTime(5*60)"/>
-      <menuitem id="tab_reloadrepeat_15m" label="&reloadrepeat_15m.label;" type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTime(15*60)"/> 
-      <menuitem id="tab_reloadrepeat_custom"  label="&reloadrepeat_custom.label;"  type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTimeCustom()"/>
-      <menuseparator /> 
-      <menuitem id="tab_reloadrepeat_randomize" label="&reloadrepeat_randomize.label;" type="checkbox" oncommand="reloadrepeat.randomize()"/>
-      <menuseparator /> 
-      <menuitem id="tab_reloadrepeat_enable_all_tabs" label="&reloadrepeat_enable_all_tabs.label;" oncommand="loadrepeat.enableAllTabs()"/>
-      <menuitem id="tab_reloadrepeat_disable_all_tabs" label="&reloadrepeat_disable_all_tabs.label;" oncommand="reloadrepeat.disableAllTabs()"/>
-      <menuitem id="tab_reloadrepeat_auto_new_tabs" label="&reloadrepeat_auto_new_tabs.label;" type="checkbox" oncommand="reloadrepeat.autoNewTabsToggle()"/>      
-    </menupopup>
+   <menupopup id="tab_reloadrepeat_popup">
+    <menuitem id="tab_reloadrepeat_enable" label="&reloadrepeat_enable.label;" type="checkbox" oncommand="reloadrepeat.toggle()"/>
+    <menuseparator /> 
+    <menuitem id="tab_reloadrepeat_5s"  label="&reloadrepeat_5s.label;"  type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTime(5)"/>
+    <menuitem id="tab_reloadrepeat_10s" label="&reloadrepeat_10s.label;" type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTime(10)"/>
+    <menuitem id="tab_reloadrepeat_30s" label="&reloadrepeat_30s.label;" type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTime(30)"/>
+    <menuitem id="tab_reloadrepeat_1m"  label="&reloadrepeat_1m.label;"  type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTime(60)"/>
+    <menuitem id="tab_reloadrepeat_5m"  label="&reloadrepeat_5m.label;"  type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTime(5*60)"/>
+    <menuitem id="tab_reloadrepeat_15m" label="&reloadrepeat_15m.label;" type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTime(15*60)"/> 
+    <menuitem id="tab_reloadrepeat_custom"  label="&reloadrepeat_custom.label;"  type="radio" name="reload_time" oncommand="reloadrepeat.setReloadTimeCustom()"/>
+    <menuseparator /> 
+    <menuitem id="tab_reloadrepeat_randomize" label="&reloadrepeat_randomize.label;" type="checkbox" oncommand="reloadrepeat.randomize()"/>
+    <menuseparator /> 
+    <menuitem id="tab_reloadrepeat_enable_all_tabs" label="&reloadrepeat_enable_all_tabs.label;" oncommand="loadrepeat.enableAllTabs()"/>
+    <menuitem id="tab_reloadrepeat_disable_all_tabs" label="&reloadrepeat_disable_all_tabs.label;" oncommand="reloadrepeat.disableAllTabs()"/>
+    <menuitem id="tab_reloadrepeat_auto_new_tabs" label="&reloadrepeat_auto_new_tabs.label;" type="checkbox" oncommand="reloadrepeat.autoNewTabsToggle()"/>      
+   </menupopup>
   </menu>
-</popup>
-
-
+ </popup>
 </overlay>

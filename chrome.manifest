@@ -1,6 +1,4 @@
 content reloadrepeat       chrome/content/
-overlay	chrome://browser/content/browser.xul	chrome://reloadrepeat/content/reloadrepeatOverlay.xul
-skin    reloadrepeat skin  chrome/skin/
 locale  reloadrepeat en-US chrome/locale/en-US/
 locale  reloadrepeat es-ES chrome/locale/es-ES/
 locale  reloadrepeat fr-FR chrome/locale/fr-FR/
@@ -15,3 +13,5 @@ locale  reloadrepeat ja-JA chrome/locale/ja-JA/
 locale  reloadrepeat ru-RU chrome/locale/ru-RU/
 locale  reloadrepeat sk-SK chrome/locale/sk-SK/
 locale  reloadrepeat pl-PL chrome/locale/pl-PL/
+skin    reloadrepeat skin  chrome/skin/
+overlay chrome://browser/content/browser.xul chrome://reloadrepeat/content/reloadrepeatOverlay.xul
