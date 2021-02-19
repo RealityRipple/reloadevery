@@ -35,7 +35,7 @@ var reloadrepeat = {
  tabID: 0,
  tabAdded: function(evt)
  {
-  let newTab = gBrowser.getBrowserForTab(evt.target);
+  var newTab = gBrowser.getBrowserForTab(evt.target);
   if (typeof newTab.reloadRepeatEnabled === 'undefined')
    reloadrepeat.setupTab(newTab);
  },
@@ -44,7 +44,7 @@ var reloadrepeat = {
   reloadrepeat.prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService).getBranch('extensions.reloadrepeat.');
   try
   {
-   let rrTime = reloadrepeat.prefs.getIntPref('reload_time');
+   var rrTime = reloadrepeat.prefs.getIntPref('reload_time');
    if (rrTime < 1)
     reloadrepeat.prefs.clearUserPref('reload_time');
   }
@@ -123,7 +123,7 @@ var reloadrepeat = {
   document.getElementById(prefix + '_5m').setAttribute('checked', 'false');
   document.getElementById(prefix + '_15m').setAttribute('checked', 'false');
   document.getElementById(prefix + '_custom').setAttribute('checked', 'false');
-  let rrTime = getBrowser().mCurrentBrowser.reloadRepeatReloadTime;
+  var rrTime = getBrowser().mCurrentBrowser.reloadRepeatReloadTime;
   if (rrTime < 1)
   {
    getBrowser().mCurrentBrowser.reloadRepeatEnabled = false;
@@ -157,8 +157,8 @@ var reloadrepeat = {
  },
  contextPopup: function()
  {
-  let cm = gContextMenu;
-  let hidden = cm.isTextSelected || cm.onLink || cm.onImage || cm.onTextInput;
+  var cm = gContextMenu;
+  var hidden = cm.isTextSelected || cm.onLink || cm.onImage || cm.onTextInput;
   document.getElementById('reloadrepeat_menu').hidden = hidden;
   if (!hidden)
    reloadrepeat.showPopupMenu('reloadrepeat');
@@ -169,7 +169,7 @@ var reloadrepeat = {
  },
  reloadPage: function (reloadRepeatTabID)
  {
-  let tab = document.getElementById(reloadRepeatTabID);
+  var tab = document.getElementById(reloadRepeatTabID);
   if (tab === null)
    return;
   if (tab.reloadRepeatEnabled === false)
@@ -177,13 +177,13 @@ var reloadrepeat = {
    tab.postDataAcceptedByUser = false;
    return;
   }
-  let loadFlags = tab.webNavigation.LOAD_FLAGS_BYPASS_HISTORY | tab.webNavigation.LOAD_FLAGS_BYPASS_PROXY | tab.webNavigation.LOAD_FLAGS_BYPASS_CACHE;
-  let entry = tab.webNavigation.sessionHistory.getEntryAtIndex(tab.webNavigation.sessionHistory.index, false);
-  let postData = entry.QueryInterface(Components.interfaces.nsISHEntry).postData;
-  let referrer = entry.QueryInterface(Components.interfaces.nsISHEntry).referrerURI;
+  var loadFlags = tab.webNavigation.LOAD_FLAGS_BYPASS_HISTORY | tab.webNavigation.LOAD_FLAGS_BYPASS_PROXY | tab.webNavigation.LOAD_FLAGS_BYPASS_CACHE;
+  var entry = tab.webNavigation.sessionHistory.getEntryAtIndex(tab.webNavigation.sessionHistory.index, false);
+  var postData = entry.QueryInterface(Components.interfaces.nsISHEntry).postData;
+  var referrer = entry.QueryInterface(Components.interfaces.nsISHEntry).referrerURI;
   if ((postData !== null) && (tab.postDataAcceptedByUser === false))
   {
-   let params = {result: null};
+   var params = {result: null};
    window.openDialog('chrome://reloadrepeat/content/warnPostData.xul', '', 'chrome,centerscreen,modal', params);
    if (params.result)
     tab.postDataAcceptedByUser = true;
@@ -195,7 +195,7 @@ var reloadrepeat = {
   }
   tab.curScrollX = tab.contentWindow.scrollX;
   tab.curScrollY = tab.contentWindow.scrollY;
-  let notifyFlags = Components.interfaces.nsIWebProgress.NOTIFY_ALL;
+  var notifyFlags = Components.interfaces.nsIWebProgress.NOTIFY_ALL;
   tab.webProgress.addProgressListener(tab.reloadRepeatProgressListener, notifyFlags);
   tab.webNavigation.loadURI(tab.webNavigation.currentURI.spec, loadFlags, referrer, entry.postData, null);
  },
@@ -206,7 +206,7 @@ var reloadrepeat = {
    reloadrepeat.prefs.clearUserPref('reload_time');
    tab.reloadRepeatReloadTime = 10;
   }
-  let milliSeconds = tab.reloadRepeatReloadTime * 1000;
+  var milliSeconds = tab.reloadRepeatReloadTime * 1000;
   if (tab.randomize)
    milliSeconds = (Math.random() + 0.5) * milliSeconds;
   return setTimeout('reloadrepeat.reloadPage(\'' + tab.id + '\');', milliSeconds);
@@ -225,7 +225,7 @@ var reloadrepeat = {
  },
  toggle: function()
  {
-  let tab = getBrowser().mCurrentBrowser;
+  var tab = getBrowser().mCurrentBrowser;
   if (tab.reloadRepeatEnabled)
    reloadrepeat.disable(tab);
   else
@@ -233,7 +233,7 @@ var reloadrepeat = {
  },
  randomize: function()
  {
-  let tab = getBrowser().mCurrentBrowser;
+  var tab = getBrowser().mCurrentBrowser;
   tab.randomize = !tab.randomize;
   reloadrepeat.prefs.setBoolPref('randomize', tab.randomize);
  },
@@ -250,11 +250,11 @@ var reloadrepeat = {
  },
  setReloadTimeCustom: function()
  {
-  let params = {result: null};
+  var params = {result: null};
   window.openDialog('chrome://reloadrepeat/content/reloadrepeatCustomDialog.xul', '', 'chrome,centerscreen,modal', params);
   if (params.result)
   {
-   let reloadTime = reloadrepeat.prefs.getIntPref('custom_reload_time');
+   var reloadTime = reloadrepeat.prefs.getIntPref('custom_reload_time');
    if (reloadTime < 1)
    {
     reloadrepeat.prefs.clearUserPref('reload_time');
@@ -268,28 +268,28 @@ var reloadrepeat = {
  customDialogLoadSettings: function()
  {
   reloadrepeat.prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService).getBranch('extensions.reloadrepeat.');
-  let customReloadTime = reloadrepeat.prefs.getIntPref('custom_reload_time');
+  var customReloadTime = reloadrepeat.prefs.getIntPref('custom_reload_time');
   document.getElementById('reload_repeat_minutes').value = Math.floor(customReloadTime / 60);
   document.getElementById('reload_repeat_seconds').value = customReloadTime % 60;
  },
  customDialogSaveSettings: function()
  {
-  let minutes = 0;
+  var minutes = 0;
   if (document.getElementById('reload_repeat_minutes').value !== '')
    minutes = parseInt(document.getElementById('reload_repeat_minutes').value);
-  let seconds = 0;
+  var seconds = 0;
   if (document.getElementById('reload_repeat_seconds').value !== '')
    seconds = parseInt(document.getElementById('reload_repeat_seconds').value);
-  let customReloadTime = minutes * 60 + seconds;
+  var customReloadTime = minutes * 60 + seconds;
   reloadrepeat.prefs.setIntPref('custom_reload_time', customReloadTime);
   reloadrepeat.prefs.setIntPref('reload_time', customReloadTime);
   return true;
  },
  enableAllTabs: function()
  {
-  for (let i = 0; i < getBrowser().browsers.length; i++)
+  for (var i = 0; i < getBrowser().browsers.length; i++)
   {
-   let tab = getBrowser().browsers[i];
+   var tab = getBrowser().browsers[i];
    if (typeof tab.reloadRepeatEnabled === 'undefined')
     reloadrepeat.setupTab(tab);
    if (tab.reloadRepeatEnabled !== true)
@@ -298,9 +298,9 @@ var reloadrepeat = {
  },
  disableAllTabs: function()
  {
-  for (let i = 0; i < getBrowser().browsers.length; i++)
+  for (var i = 0; i < getBrowser().browsers.length; i++)
   {
-   let tab = getBrowser().browsers[i];
+   var tab = getBrowser().browsers[i];
    if (tab.reloadRepeatEnabled === true)
     reloadrepeat.disable(tab);
   }
